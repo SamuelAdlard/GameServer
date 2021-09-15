@@ -23,6 +23,7 @@ namespace GameServer
         public TCP tcp;
         public UDP udp;
 
+        
         public Client(int _clientId)
         {
             id = _clientId;
@@ -30,6 +31,7 @@ namespace GameServer
             udp = new UDP(id);
         }
 
+        
         public class TCP
         {
             public TcpClient socket;
@@ -46,7 +48,10 @@ namespace GameServer
 
             public void Connect(TcpClient _socket)
             {
+
+                Console.WriteLine(_socket.Client);
                 socket = _socket;
+                Console.WriteLine(socket.Client);
                 socket.ReceiveBufferSize = dataBufferSize;
                 socket.SendBufferSize = dataBufferSize;
 
