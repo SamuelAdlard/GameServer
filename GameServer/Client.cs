@@ -59,7 +59,7 @@ namespace GameServer
 
                 receivedData = new Packet();
                 receiveBuffer = new byte[dataBufferSize];
-
+                Console.WriteLine(stream);
                 stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
 
                 ServerSend.Welcome(id, "Welcome to the server!");
@@ -84,9 +84,13 @@ namespace GameServer
             {
                 try
                 {
+                    //_byteLength is 0
                     int _byteLength = stream.EndRead(_result);
+                    
+                    Console.WriteLine("Byte length: "+_byteLength);
                     if (_byteLength <= 0)
                     {
+                        //Player is being disconnected here
                         Server.clients[id].Disconnect();
                         return;
                     }
