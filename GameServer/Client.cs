@@ -9,21 +9,13 @@ namespace GameServer
 {
     class Client
     {
-        
-        
         public static int dataBufferSize = 4096;
 
         public int id;
         public Player player;
-        
-        //0 = no team
-        //1 = red
-        //2 = blue
-
         public TCP tcp;
         public UDP udp;
 
-        
         public Client(int _clientId)
         {
             id = _clientId;
@@ -31,7 +23,6 @@ namespace GameServer
             udp = new UDP(id);
         }
 
-        
         public class TCP
         {
             public TcpClient socket;
@@ -48,10 +39,7 @@ namespace GameServer
 
             public void Connect(TcpClient _socket)
             {
-
-                Console.WriteLine(_socket.Client);
                 socket = _socket;
-                Console.WriteLine(socket.Client);
                 socket.ReceiveBufferSize = dataBufferSize;
                 socket.SendBufferSize = dataBufferSize;
 
@@ -59,7 +47,7 @@ namespace GameServer
 
                 receivedData = new Packet();
                 receiveBuffer = new byte[dataBufferSize];
-                Console.WriteLine(stream);
+
                 stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
 
                 ServerSend.Welcome(id, "Welcome to the server!");
@@ -84,13 +72,9 @@ namespace GameServer
             {
                 try
                 {
-                    //_byteLength is 0
                     int _byteLength = stream.EndRead(_result);
-                    
-                    Console.WriteLine("Byte length: "+_byteLength);
                     if (_byteLength <= 0)
                     {
-                        //Player is being disconnected here
                         Server.clients[id].Disconnect();
                         return;
                     }
@@ -238,9 +222,6 @@ namespace GameServer
 
             tcp.Disconnect();
             udp.Disconnect();
-
-            ServerSend.PlayerDisconnected(id);
-
         }
     }
 }

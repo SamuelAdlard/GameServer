@@ -13,7 +13,7 @@ namespace GameServer
         public static Dictionary<int, Client> clients = new Dictionary<int, Client>();
         public delegate void PacketHandler(int _fromClient, Packet _packet);
         public static Dictionary<int, PacketHandler> packetHandlers;
-        
+
         private static TcpListener tcpListener;
         private static UdpClient udpListener;
 
@@ -27,7 +27,6 @@ namespace GameServer
 
             tcpListener = new TcpListener(IPAddress.Any, Port);
             tcpListener.Start();
-            
             tcpListener.BeginAcceptTcpClient(TCPConnectCallback, null);
 
             udpListener = new UdpClient(Port);
@@ -35,21 +34,17 @@ namespace GameServer
 
             Console.WriteLine($"Server started on port {Port}.");
         }
-        //Problem in this method
+
         private static void TCPConnectCallback(IAsyncResult _result)
         {
             TcpClient _client = tcpListener.EndAcceptTcpClient(_result);
-            
             tcpListener.BeginAcceptTcpClient(TCPConnectCallback, null);
-            
             Console.WriteLine($"Incoming connection from {_client.Client.RemoteEndPoint}...");
 
             for (int i = 1; i <= MaxPlayers; i++)
             {
                 if (clients[i].tcp.socket == null)
                 {
-                    Console.WriteLine(i);
-                    Console.WriteLine(_client.Client);
                     clients[i].tcp.Connect(_client);
                     return;
                 }
