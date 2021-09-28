@@ -64,17 +64,19 @@ namespace GameServer
 
         private static void StartGame()
         {
+            hasStarted = true;
             int redPlayer = Random(redPlayers.Count);
             int bluePlayer = Random(bluePlayers.Count);
             redPlayers[redPlayer].isLeader = true;
             bluePlayers[bluePlayer].isLeader = true;
             foreach (Player player in players)
             {
+                
                 ServerSend.StartGame(player.id,player.isLeader);
             }
             ServerSend.SendLeaders(redPlayers[redPlayer].id);
             ServerSend.SendLeaders(bluePlayers[bluePlayer].id);
-            hasStarted = true;
+            
             Console.WriteLine("Game started!");
         }
 

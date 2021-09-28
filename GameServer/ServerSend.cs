@@ -170,6 +170,7 @@ namespace GameServer
         {
             using (Packet _packet = new Packet((int)ServerPackets.startGame))
             {
+                Console.WriteLine(_isleader);
                 _packet.Write(_isleader);               
                 SendTCPData(_toClient, _packet);
             }

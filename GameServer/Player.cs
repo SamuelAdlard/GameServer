@@ -9,7 +9,7 @@ namespace GameServer
     {
         public int id;
         public string username;
-        public bool isLeader;
+        public bool isLeader = false;
         public int team = 0;
         public Vector3 position;
         public Quaternion rotation;
