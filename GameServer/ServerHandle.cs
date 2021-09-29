@@ -62,12 +62,16 @@ namespace GameServer
 
         public static void EndGame(int _fromClient, Packet _packet)
         {
-            foreach (Player player in GameManager.players)
+            foreach (Client client in Server.clients.Values)
             {
-                player.team = 0;
+                if (client.player != null)
+                {
+                    client.player.team = 0;
+                }
+                
             }
             GameManager.hasStarted = false;
-            
+            GameManager.EndGame();
             int _team = _packet.ReadInt();
             ServerSend.EndGame(_team);
             Console.WriteLine("Game ended!");

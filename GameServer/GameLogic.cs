@@ -10,7 +10,7 @@ namespace GameServer
         {
             if (!GameManager.hasStarted)
             {
-                GameManager.GetConnectedPlayers();
+                GameManager.CheckPlayers();
                 
             }
 

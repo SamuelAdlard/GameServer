@@ -8,76 +8,80 @@ namespace GameServer
 {
     class GameManager
     {
-        public static List<Player> players = new List<Player>();
+        
         static List<Player> redPlayers = new List<Player>();
         static List<Player> bluePlayers = new List<Player>();
         public static bool hasStarted = false;
-        public static bool allPlayersReady;
-        public static void GetConnectedPlayers()
+        public static bool allPlayersReady = false;
+        
+        public static void CheckPlayers()
         {
-            allPlayersReady = true;
-            players.Clear();
-            redPlayers.Clear();
-            bluePlayers.Clear();
+            List<Player> players = new List<Player>();
             foreach (Client client in Server.clients.Values)
             {
-                
                 if (client.player != null)
                 {
-                    foreach (Player player in players)
-                    {
-                        ServerSend.TeamSync(player.id,client.id,player.team);
-                    }
-                    
                     players.Add(client.player);
-                    
-                    if (client.player.team == 0)
-                    {
-                        allPlayersReady = false;
-
-                    }
                 }
-
-                
                 
             }
-
-           
+            allPlayersReady = true;
+            foreach (Player player in players)
+            {
+                
+                if (player != null)
+                {
+                    
+                    
+                    if (player.team == 0)
+                    {
+                        allPlayersReady = false;
+                    }
+                }
+                
+            }
             
 
             if (allPlayersReady && players.Count > 1)
             {
                 foreach (Player player in players)
                 {
-                    if (player.team == 1)
+                    if (player != null)
                     {
-                        redPlayers.Add(player);
+                        if (player.team == 1)
+                        {
+                            redPlayers.Add(player);
+                        }
+                        else
+                        {
+                            bluePlayers.Add(player);
+                        }
                     }
-                    else
-                    {
-                        bluePlayers.Add(player);
-                    }
+                    
                 }
-                StartGame();
+                StartGame(players);
             }
         }
 
-        private static void StartGame()
+        private static void StartGame(List<Player> players)
         {
             hasStarted = true;
             int redPlayer = Random(redPlayers.Count);
             int bluePlayer = Random(bluePlayers.Count);
             redPlayers[redPlayer].isLeader = true;
             bluePlayers[bluePlayer].isLeader = true;
-            foreach (Player player in players)
-            {
-                
-                ServerSend.StartGame(player.id,player.isLeader);
-            }
+            ServerSend.StartGame(redPlayers[redPlayer].id, true);
+            ServerSend.StartGame(bluePlayers[bluePlayer].id, true);
             ServerSend.SendLeaders(redPlayers[redPlayer].id);
             ServerSend.SendLeaders(bluePlayers[bluePlayer].id);
             
             Console.WriteLine("Game started!");
+        }
+
+        public static void EndGame()
+        {
+            bluePlayers.Clear();
+            redPlayers.Clear();
         }
 
         private static int Random(int max)
