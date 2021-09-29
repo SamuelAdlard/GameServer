@@ -171,7 +171,10 @@ namespace GameServer
             using (Packet _packet = new Packet((int)ServerPackets.startGame))
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 
+=======
+>>>>>>> parent of 3b6207f (Fixed bug?)
 =======
 >>>>>>> parent of 3b6207f (Fixed bug?)
                 _packet.Write(_isleader);               
