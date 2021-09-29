@@ -65,16 +65,22 @@ namespace GameServer
 
         private static void StartGame(List<Player> players)
         {
-            hasStarted = true;
             int redPlayer = Random(redPlayers.Count);
             int bluePlayer = Random(bluePlayers.Count);
             redPlayers[redPlayer].isLeader = true;
             bluePlayers[bluePlayer].isLeader = true;
+<<<<<<< HEAD
             ServerSend.StartGame(redPlayers[redPlayer].id, true);
             ServerSend.StartGame(bluePlayers[bluePlayer].id, true);
+=======
+            foreach (Player player in players)
+            {
+                ServerSend.StartGame(player.id,player.isLeader);
+            }
+>>>>>>> parent of 3b6207f (Fixed bug?)
             ServerSend.SendLeaders(redPlayers[redPlayer].id);
             ServerSend.SendLeaders(bluePlayers[bluePlayer].id);
-            
+            hasStarted = true;
             Console.WriteLine("Game started!");
         }
 
