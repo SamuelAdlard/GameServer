@@ -69,11 +69,11 @@ namespace GameServer
             int bluePlayer = Random(bluePlayers.Count);
             redPlayers[redPlayer].isLeader = true;
             bluePlayers[bluePlayer].isLeader = true;
-            foreach (Player player in players)
-            {
+            
+            
                 
-                ServerSend.StartGame(player.id,player.isLeader);
-            }
+            ServerSend.StartGame(redPlayers[redPlayer].id, true);
+            ServerSend.StartGame(bluePlayers[bluePlayer].id, true);
             ServerSend.SendLeaders(redPlayers[redPlayer].id);
             ServerSend.SendLeaders(bluePlayers[bluePlayer].id);
             
