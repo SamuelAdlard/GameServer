@@ -193,6 +193,38 @@ namespace GameServer
                 SendTCPDataToAll( _packet);
             }
         }
+
+        public static void NewBoat(Vector3 _position, Quaternion _rotation,int _id)
+        {
+            using (Packet _packet = new Packet((int)ServerPackets.newBoat))
+            {
+                _packet.Write(_position);
+                _packet.Write(_rotation);
+                _packet.Write(_id);
+                SendTCPDataToAll(_packet);
+            }
+        }
+
+        public static void Boat(Vector3 _position, Quaternion _rotation, int _id, bool isDriven, int fromClient)
+        {
+            using (Packet _packet = new Packet((int)ServerPackets.boat))
+            {
+                _packet.Write(_position);
+                _packet.Write(_rotation);
+                _packet.Write(_id);
+                _packet.Write(isDriven);
+                SendUDPDataToAll(fromClient ,_packet);
+            }
+        }
+
+        public static void Dismount(int _id)
+        {
+            using (Packet _packet = new Packet((int)ServerPackets.boatDismount))
+            {
+                _packet.Write(_id);
+                SendTCPDataToAll(_packet);
+            }
+        }
         #endregion
     }
 }

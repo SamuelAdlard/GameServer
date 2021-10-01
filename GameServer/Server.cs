@@ -121,7 +121,10 @@ namespace GameServer
                 { (int)ClientPackets.playerMovement, ServerHandle.PlayerMovement },
                 { (int)ClientPackets.playerHit, ServerHandle.PlayerHit },
                 { (int)ClientPackets.teamSelect, ServerHandle.TeamSelect},
-                { (int)ClientPackets.endGame, ServerHandle.EndGame}
+                { (int)ClientPackets.endGame, ServerHandle.EndGame},
+                { (int)ClientPackets.newBoat, ServerHandle.NewBoat},
+                { (int)ClientPackets.boat, ServerHandle.Boat},
+                { (int)ClientPackets.boatDismount, ServerHandle.Dismount}
 
             };
             Console.WriteLine("Initialized packets.");

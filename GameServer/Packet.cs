@@ -18,7 +18,10 @@ namespace GameServer
         teamSync,
         startGame,
         leader,
-        endGame
+        endGame,
+        boat,
+        newBoat,
+        boatDismount
     }
 
     /// <summary>Sent from client to server.</summary>
@@ -28,8 +31,11 @@ namespace GameServer
         playerMovement,
         playerHit,
         teamSelect,
-        endGame
-       
+        endGame,
+        boat,
+        newBoat,
+        boatDismount
+
     }
 
     public class Packet : IDisposable

@@ -73,5 +73,27 @@ namespace GameServer
             Console.WriteLine("Game ended!");
 
         }
+
+        public static void NewBoat(int _fromClient, Packet _packet)
+        {
+            Vector3 _position = _packet.ReadVector3();
+            Quaternion _rotation = _packet.ReadQuaternion();
+            BoatManager.NewBoat(_position, _rotation);
+        }
+
+        public static void Boat(int _fromClient, Packet _packet)
+        {
+            Vector3 _position = _packet.ReadVector3();
+            Quaternion _rotation = _packet.ReadQuaternion();
+            int _id = _packet.ReadInt();
+            bool isdriven = _packet.ReadBool();
+            BoatManager.UpdateTransform(_position, _rotation, _id, isdriven, _fromClient);
+        }
+
+        public static void Dismount(int fromClient, Packet _packet)
+        {
+            int _id = _packet.ReadInt();
+            BoatManager.Dismount(_id);
+        }
     }
 }
