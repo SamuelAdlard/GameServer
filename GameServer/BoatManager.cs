@@ -30,8 +30,12 @@ namespace GameServer
 
         public static void Dismount(int _id)
         {
-            boats[_id].isDriven = false;
-            ServerSend.Dismount(_id);
+            if (boats.ContainsKey(_id))
+            {
+                boats[_id].isDriven = false;
+                ServerSend.Dismount(_id);
+            }
+            
         }
     }
 }

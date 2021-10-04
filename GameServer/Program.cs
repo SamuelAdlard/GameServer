@@ -33,7 +33,16 @@ namespace GameServer
 
                     if (_nextLoop > DateTime.Now)
                     {
-                        Thread.Sleep(_nextLoop - DateTime.Now);
+                        
+                        try
+                        {
+                            Thread.Sleep(_nextLoop - DateTime.Now);
+                        }
+                        catch
+                        {
+
+                        }
+                        
                     }
                 }
             }
