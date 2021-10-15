@@ -38,9 +38,9 @@ namespace GameServer
                         {
                             Thread.Sleep(_nextLoop - DateTime.Now);
                         }
-                        catch
+                        catch(Exception _ex)
                         {
-
+                            Console.WriteLine(_ex);
                         }
                         
                     }
